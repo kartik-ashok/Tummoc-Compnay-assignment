@@ -1,0 +1,55 @@
+package assignments;
+
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class AddDaysToDate {
+
+    public static String addDaysToDate(String inputDate, int daysToAdd) {
+        try {
+            // Define the date format
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+            // Parse the input date string to a Date object
+            Date date = dateFormat.parse(inputDate);
+
+            // Create a Calendar instance and set it to the parsed date
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            // Add the specified number of days
+            calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
+
+            // Format the new date as a string
+            String newDate = dateFormat.format(calendar.getTime());
+
+            return newDate;
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Please use the format dd-MM-yyyy.");
+            System.exit(1);
+            return null; // Unreachable, but needed for compiler
+        }
+    }
+
+    public static void main(String[] args) {
+        // Check if the correct number of command line arguments are provided
+        if (args.length != 4 || !args[2].equals("--days")) {
+            System.out.println("Usage: java AddDaysToDate <date> --days <daysToAdd>");
+            System.exit(1);
+        }
+
+        // Get input date and days to add from command line arguments
+        String inputDate = args[0];
+        int daysToAdd = Integer.parseInt(args[3]);
+
+        // Call the method to add days to the date
+        String resultDate = addDaysToDate(inputDate, daysToAdd);
+
+        // Print the result
+        System.out.println(resultDate);
+    }
+}

@@ -1,0 +1,74 @@
+package assignments;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
+
+public class ConcurrentSumCalculator {
+
+    public static class SumTask implements Callable<Long> {
+        private final long start;
+        private final long end;
+
+        public SumTask(long start, long end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public Long call() {
+            long sum = 0;
+            for (long i = start; i <= end; i++) {
+                sum += i;
+            }
+            return sum;
+        }
+    }
+
+    public static void main(String[] args) {
+        // Get the limit of the sum from the user
+        int limit = getLimitFromUser();
+
+        // Specify the number of threads to use
+        int numThreads = 3; // You can adjust this based on your requirements
+
+        // Create an ExecutorService with a fixed number of threads
+        ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
+
+        // Divide the work among threads
+        List<Future<Long>> futures = new ArrayList<>();
+        long chunkSize = (long) Math.ceil((double) limit / numThreads);
+
+        for (int i = 0; i < numThreads; i++) {
+            long start = i * chunkSize + 1;
+            long end = Math.min((i + 1) * chunkSize, limit);
+            Callable<Long> task = new SumTask(start, end);
+            Future<Long> future = executorService.submit(task);
+            futures.add(future);
+        }
+
+        // Wait for all threads to finish and collect the results
+        long totalSum = 0;
+        for (Future<Long> future : futures) {
+            try {
+                totalSum += future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Shutdown the ExecutorService
+        executorService.shutdown();
+
+        // Print the result
+        System.out.println("The sum of numbers from 1 to " + limit + " is: " + totalSum);
+    }
+
+    private static int getLimitFromUser() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the limit for the sum: ");
+        int limit = scanner.nextInt();
+        scanner.close();
+        return limit;
+    }
+}

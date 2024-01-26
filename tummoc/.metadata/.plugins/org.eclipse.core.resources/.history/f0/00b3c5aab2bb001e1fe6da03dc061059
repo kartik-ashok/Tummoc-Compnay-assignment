@@ -1,0 +1,59 @@
+package assignments;
+
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class Main {
+    Node head;
+
+    public void addNode(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+        }
+    }
+
+    public void printReverse(Node node) {
+        if (node == null) {
+            return;
+        }
+
+        printReverse(node.next);
+        System.out.print(node.data + " ");
+    }
+
+    public void printReverseList() {
+        System.out.print("Reversed List: ");
+        printReverse(head);
+        System.out.println();
+    }
+}
+
+public class LinkedList {
+    public static void main(String[] args) {
+        LinkedList linkedList = new LinkedList();
+
+        // Adding elements to the linked list
+        linkedList.addNode(1);
+        linkedList.addNode(2);
+        linkedList.addNode(3);
+        linkedList.addNode(4);
+        linkedList.addNode(5);
+
+        // Printing the linked list in reverse order
+        linkedList.printReverseList();
+    }
+}

@@ -1,0 +1,37 @@
+package assignments;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class AddDaysToDate {
+
+    public static void main(String[] args) {
+        if (args.length != 2) {
+            System.out.println("Usage: java AddDaysToDate <Date> <days>");
+            return;
+        }
+
+        String inputDate = args[0];
+        int daysToAdd = Integer.parseInt(args[1]);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            Date date = sdf.parse(inputDate);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
+
+            Date updatedDate = calendar.getTime();
+            String updatedDateString = sdf.format(updatedDate);
+
+            System.out.println("Updated Date: " + updatedDateString);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Please use the format dd-MM-yyyy.");
+        }
+    }
+}
+

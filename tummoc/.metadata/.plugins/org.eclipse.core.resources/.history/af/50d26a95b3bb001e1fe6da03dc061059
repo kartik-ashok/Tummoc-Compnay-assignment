@@ -1,0 +1,32 @@
+package assignments;
+
+public class Output {
+//	Give the output for the following and explain.
+		int leg;
+	}
+	class Main {
+		public static void main(String[] args) {
+		Output d1 = new Output();
+		d1.leg = 4;
+		Output d2 = new Output();
+		d2.leg = 3;
+		swap(d1, d2);
+		System.out.println("d1.leg = "+d1.leg);
+		System.out.println("d2.leg = "+d2.leg);
+		modify(d1);
+		System.out.println("d1.leg = "+d1.leg);
+		}
+		static void swap(Output d1, Output d2) {
+		Output temp = d2;
+		d2 = d1;
+		d1 = temp;
+		}
+		static void modify(Dog d1) {
+			d1.leg = 0;
+		}
+	}
+
+
+
+
+

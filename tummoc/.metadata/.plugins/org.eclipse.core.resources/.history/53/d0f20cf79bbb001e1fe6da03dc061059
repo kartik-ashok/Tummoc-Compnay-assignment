@@ -1,0 +1,16 @@
+package assignments;
+
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class AddDaysToDate {
+
+   public static void main(String[] args) {
+	Date date=new Date();
+	System.out.println(date.getDate());
+}
+}
